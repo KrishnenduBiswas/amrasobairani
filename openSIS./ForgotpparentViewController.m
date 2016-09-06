@@ -17,6 +17,7 @@
 #import "ForgotpasswordViewController.h"
 #import "ForgotusernameViewController.h"
 #import "LoginViewController.h"
+#import "reset.h"
 
 @interface ForgotpparentViewController ()
 @property (strong, nonatomic) IBOutlet UIView *view3;
@@ -159,17 +160,15 @@
 
 -(IBAction)forgotparent:(id)sender
 {
-    
-    
-    /*[self.txt_email resignFirstResponder];
+    [self.txt_email resignFirstResponder];
     [self.txt_password resignFirstResponder];
     // username
     //   uname_staff
-    NSString *username=@"username";
-    NSString *parent=@"uname_parent";
+    NSString *password=@"password";
+    NSString *pass=@"pass_staff";
     ip_url *obj123=[[ip_url alloc]init];
     NSString *str123=[obj123 ipurl];
-    NSString*str_checklogin=[NSString stringWithFormat:@"/forgot_pwd.php?user_type_form=%@&uname_user_type=%@&pass=%@&username_stf_email=%@",username,parent,self.txt_password.text,self.txt_email.text];
+    NSString*str_checklogin=[NSString stringWithFormat:@"/forgot_pwd.php?pass_type_form=%@&pass_user_type=%@&uname=%@&password_stf_email=%@",password,pass,self.txt_password.text,self.txt_email.text];
     NSLog(@"kkkkkkkkkkk%@",str_checklogin);
     NSString *url12=[NSString stringWithFormat:@"%@%@",str123,str_checklogin];
     
@@ -181,7 +180,7 @@
     // 2
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
-    operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"]; // Add korlam bcoz sob content type support korena
+    operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"]; // Add korlam bcoz sob content type support korena
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSMutableDictionary *  dictionary1=[[NSMutableDictionary alloc]init];
@@ -199,22 +198,20 @@
             
             //  [obj12 setObject:dictionary1 forKey:@"profile_data"];
             
-            //                UIStoryboard *s=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
             //
-            //                TeacherDashboardViewController *obj1=[s instantiateViewControllerWithIdentifier:@"dash"];
-            //                obj1.dic=dictionary1;
-            //                [self.navigationController pushViewController:obj1 animated:YES];
             NSLog(@"ok");
             
-            NSString *str_124=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"fill_username"]];
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Success" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-            [alert show];
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-            //    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"login"];
-            LoginViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"login"];
+            NSString *str_124=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"flag"]];
             
-            vc.pass_data=str_124;
-            [self.navigationController pushViewController:vc animated:NO];
+            NSString *str_125=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"user_info"]];
+            //                             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Success" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+            //                [alert show];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            
+            reset* vc = [storyboard instantiateViewControllerWithIdentifier:@"reset12"];
+            vc.initialstr=str_124;
+            vc.user_info=str_125;
+            [self.navigationController pushViewController:vc animated:YES];
             
         }
         
@@ -240,11 +237,10 @@
     }];
     
     
-    [operation start];*/
+    [operation start];
     
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
     
     
 }

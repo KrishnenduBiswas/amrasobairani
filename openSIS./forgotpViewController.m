@@ -14,6 +14,7 @@
 #import "AFNetworking.h"
 #import "ForgotpasswordViewController.h"
 #import "ForgotusernameViewController.h"
+#import "LoginViewController.h"
 @interface forgotpViewController  ()
 @property (strong, nonatomic) IBOutlet UIView *view3;
 @property (strong, nonatomic) IBOutlet UIView *view2;
@@ -244,91 +245,94 @@ else
 
 -(IBAction)fogotstaff:(id)sender
 {
-
-   
-   /* [self.txt_email resignFirstResponder];
+    
+    
+    [self.txt_email resignFirstResponder];
     [self.txt_password resignFirstResponder];
-   // username
- //   uname_staff
-     NSString *username=@"username";
-    NSString *staff=@"uname_staff";
+    // username
+    //   uname_staff
+    NSString *username=@"username";
+    NSString *staff=@"uname_parent";
     ip_url *obj123=[[ip_url alloc]init];
     NSString *str123=[obj123 ipurl];
-        NSString*str_checklogin=[NSString stringWithFormat:@"/forgot_pwd.php?user_type_form=%@&uname_user_type=%@&pass=%@&username_stf_email=%@",username,staff,self.txt_password.text,self.txt_email.text];
-        NSLog(@"kkkkkkkkkkk%@",str_checklogin);
-        NSString *url12=[NSString stringWithFormat:@"%@%@",str123,str_checklogin];
+    NSString*str_checklogin=[NSString stringWithFormat:@"/forgot_pwd.php?user_type_form=%@&uname_user_type=%@&pass=%@&username_stf_email=%@",username,staff,self.txt_password.text,self.txt_email.text];
+    NSLog(@"kkkkkkkkkkk%@",str_checklogin);
+    NSString *url12=[NSString stringWithFormat:@"%@%@",str123,str_checklogin];
     
     NSLog(@"----%@",url12);
-        NSURL *url = [NSURL URLWithString:url12];
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        
-        
-        // 2
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        operation.responseSerializer = [AFJSONResponseSerializer serializer];
-        operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"]; // Add korlam bcoz sob content type support korena
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            NSMutableDictionary *  dictionary1=[[NSMutableDictionary alloc]init];
-            dictionary1 = (NSMutableDictionary *)responseObject;
-            NSLog(@"%@",dictionary1); // ei khanei nslog korle dekhache, blocker baire dekhache na
-            //    NSUserDefaults *obj12=[NSUserDefaults standardUserDefaults];
-            
-            //  [obj12  setValue:dictionary1  forKey:@"profile_data"];
-            NSString *str_123=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"success"]];
-            NSLog(@"str_123-----%@",str_123);
-            if([str_123 isEqualToString:@"1"])
-            {
-                
-                //   NSUserDefaults *obj12=[NSUserDefaults standardUserDefaults];
-                
-                //  [obj12 setObject:dictionary1 forKey:@"profile_data"];
-                
-//                UIStoryboard *s=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//                
-//                TeacherDashboardViewController *obj1=[s instantiateViewControllerWithIdentifier:@"dash"];
-//                obj1.dic=dictionary1;
-//                [self.navigationController pushViewController:obj1 animated:YES];
-                NSLog(@"ok");
-                
-                
-            }
-            
-            
-            else
-            {
-                NSString *str_msg=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"err_msg"]];
-                
-                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Alert" message:str_msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-                [alert show];
-                
-                //  transparentView.hidden=NO;
-                // NSLog(@"ok----");
-                //[self.view addSubview:transparentView];
-                
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-         
-           // transparentView.hidden=NO;
-           // [self.view addSubview:transparentView];
-        }];
-        
-        
-        [operation start];*/
-        
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        
-        
-        
-        
-        
-   
+    NSURL *url = [NSURL URLWithString:url12];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-
-
+    
+    // 2
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"]; // Add korlam bcoz sob content type support korena
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSMutableDictionary *  dictionary1=[[NSMutableDictionary alloc]init];
+        dictionary1 = (NSMutableDictionary *)responseObject;
+        NSLog(@"%@",dictionary1); // ei khanei nslog korle dekhache, blocker baire dekhache na
+        //    NSUserDefaults *obj12=[NSUserDefaults standardUserDefaults];
+        
+        //  [obj12  setValue:dictionary1  forKey:@"profile_data"];
+        NSString *str_123=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"success"]];
+        NSLog(@"str_123-----%@",str_123);
+        if([str_123 isEqualToString:@"1"])
+        {
+            
+            //   NSUserDefaults *obj12=[NSUserDefaults standardUserDefaults];
+            
+            //  [obj12 setObject:dictionary1 forKey:@"profile_data"];
+            
+            //                UIStoryboard *s=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            //
+            //                TeacherDashboardViewController *obj1=[s instantiateViewControllerWithIdentifier:@"dash"];
+            //                obj1.dic=dictionary1;
+            //                [self.navigationController pushViewController:obj1 animated:YES];
+            NSLog(@"ok");
+            
+            NSString *str_124=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"fill_username"]];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Success" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+            [alert show];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            //    UIViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"login"];
+            LoginViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"login"];
+            
+            vc.pass_data=str_124;
+            [self.navigationController pushViewController:vc animated:NO];
+            
+        }
+        
+        
+        else
+        {
+            NSString *str_msg=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"err_msg"]];
+            
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Alert" message:str_msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+            [alert show];
+            
+            //  transparentView.hidden=NO;
+            // NSLog(@"ok----");
+            //[self.view addSubview:transparentView];
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+        transparentView.hidden=NO;
+        [self.view addSubview:transparentView];
+    }];
+    
+    
+    [operation start];
+    
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    
+    
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {

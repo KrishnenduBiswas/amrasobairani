@@ -8,6 +8,10 @@
 
 #import "ForgotpasswordViewController.h"
 #import "forgotpstaffViewController.h"
+#import "AppDelegate.h"
+#import "ip_url.h"
+#import "MBProgressHUD.h"
+#import "reset.h"
 @interface ForgotpasswordViewController ()
 
 {
@@ -164,13 +168,134 @@
     else
     {
         
-        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //[MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self performSelector:@selector(forgotstaff:) withObject:nil afterDelay:2];
+            });
+        });
+
         
     }
     
     
     
 }
+
+
+
+
+-(IBAction)forgotstaff:(id)sender
+{
+    [txt2 resignFirstResponder];
+    [txt3 resignFirstResponder];
+    // username
+    //   uname_staff
+    NSString *password=@"password";
+    NSString *pass=@"pass_student";
+    ip_url *obj123=[[ip_url alloc]init];
+    NSString *str123=[obj123 ipurl];
+    NSString*str_checklogin=[NSString stringWithFormat:@"/forgot_pwd.php?user_type_form=%@&uname_user_type=%@&username_stn_id=%@&pass=%@&student_dob%@",password,pass,txt2.text,txt3.text,txt4.text];
+    NSLog(@"kkkkkkkkkkk%@",str_checklogin);
+    NSString *url12=[NSString stringWithFormat:@"%@%@",str123,str_checklogin];
+    
+    NSLog(@"----%@",url12);
+    NSURL *url = [NSURL URLWithString:url12];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    
+    // 2
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"]; // Add korlam bcoz sob content type support korena
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSMutableDictionary *  dictionary1=[[NSMutableDictionary alloc]init];
+        dictionary1 = (NSMutableDictionary *)responseObject;
+        NSLog(@"%@",dictionary1); // ei khanei nslog korle dekhache, blocker baire dekhache na
+        //    NSUserDefaults *obj12=[NSUserDefaults standardUserDefaults];
+        
+        //  [obj12  setValue:dictionary1  forKey:@"profile_data"];
+        NSString *str_123=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"success"]];
+        NSLog(@"str_123-----%@",str_123);
+        if([str_123 isEqualToString:@"1"])
+        {
+            
+            //   NSUserDefaults *obj12=[NSUserDefaults standardUserDefaults];
+            
+            //  [obj12 setObject:dictionary1 forKey:@"profile_data"];
+            
+            //
+            NSLog(@"ok");
+            
+            NSString *str_124=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"flag"]];
+            
+            NSString *str_125=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"user_info"]];
+            //                             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Success" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+            //                [alert show];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            
+            reset* vc = [storyboard instantiateViewControllerWithIdentifier:@"reset12"];
+            vc.initialstr=str_124;
+            vc.user_info=str_125;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
+        
+        
+        else
+        {
+            NSString *str_msg=[NSString stringWithFormat:@"%@",[dictionary1 objectForKey:@"err_msg"]];
+            
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Alert" message:str_msg delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+            [alert show];
+            
+            //  transparentView.hidden=NO;
+            // NSLog(@"ok----");
+            //[self.view addSubview:transparentView];
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+//        transparentView.hidden=NO;
+//        [self.view addSubview:transparentView];
+    }];
+    
+    
+    [operation start];
+    
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
