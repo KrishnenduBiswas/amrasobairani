@@ -74,9 +74,9 @@
     [super viewDidLoad];
     
   //  [self showdata];
-    slide = [[SlideViewController alloc]init];
-    [slide setrect:self.view];
-    [slide setparentobject:self parentname:@"teacherdashboard"];
+    slide = [[SlideViewController alloc]init];//atha slider create hoche
+    [slide setrect:self.view];//view a set hoche
+    [slide setparentobject:self parentname:@"teacherdashboard"];//jeh class a set korte chaichi seai class set korchi.
    
     [NSTimer scheduledTimerWithTimeInterval:2.0
                                      target:self

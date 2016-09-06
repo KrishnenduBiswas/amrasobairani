@@ -732,7 +732,7 @@
     }
     
 }
--(void)setrect:(UIView *)superview
+-(void)setrect:(UIView *)superview//atha imaportant
 {
     _superV = superview;
     

@@ -165,7 +165,7 @@
     // username
     //   uname_staff
     NSString *password=@"password";
-    NSString *pass=@"pass_staff";
+    NSString *pass=@"pass_parent";
     ip_url *obj123=[[ip_url alloc]init];
     NSString *str123=[obj123 ipurl];
     NSString*str_checklogin=[NSString stringWithFormat:@"/forgot_pwd.php?pass_type_form=%@&pass_user_type=%@&uname=%@&password_stf_email=%@",password,pass,self.txt_password.text,self.txt_email.text];
