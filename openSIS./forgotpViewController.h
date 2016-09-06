@@ -14,6 +14,9 @@
     UIPickerView *selectcustomerpicker;
     
     IBOutlet UILabel *lbl_name;
+    
+    IBOutlet UIView *transparentView;
+
 
 }
 @property (strong,nonatomic)NSString *initialstr,*select_profile,*pr;
